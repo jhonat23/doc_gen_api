@@ -1,6 +1,9 @@
 # FastAPI 
 from fastapi import FastAPI
 
+# Models
+from .models.schemas import User
+
 # Create app instance
 app = FastAPI()
 
@@ -12,3 +15,9 @@ app = FastAPI()
 )
 def root():
     return {'Mensaje': '¡Hola!'}
+
+@app.get(
+    path="/user"
+)
+def get_user(user: User):
+    return 
