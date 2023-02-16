@@ -2,7 +2,7 @@
 from fastapi import FastAPI
 
 # Models
-from .models.schemas import User
+from .schemas import User
 
 # Create app instance
 app = FastAPI()
