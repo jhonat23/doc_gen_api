@@ -38,4 +38,5 @@ LocalSession = sessionmaker(
 
 # Creating base for models
 class Base(DeclarativeBase):
+    """This class is the basis to construct the models"""
     pass
