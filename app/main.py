@@ -1,8 +1,17 @@
 # FastAPI 
 from fastapi import FastAPI
 
-# Models
-from .schemas import User
+# Models an schemas
+from .schemas import UserSchema
+
+# Database
+from .database.database import Base, engine
+from .database.crud import get_user_by_id
+
+# SQLAlchemy
+from sqlalchemy.orm import Session
+
+Base.metadata.create_all(bind=engine)
 
 # Create app instance
 app = FastAPI()
@@ -17,7 +26,9 @@ def root():
     return {'Mensaje': '¡Hola!'}
 
 @app.get(
-    path="/user"
+    path="/user/{user_id}"
 )
-def get_user(user: User):
-    return 
+def get_user(user_id: int):
+    result = get_user_by_id(Session, user_id)
+    print(result)
+    return '1'

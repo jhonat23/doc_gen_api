@@ -14,7 +14,7 @@ class UserLogin(UserBase):
     )
 
 ## User for database
-class User(UserLogin):
+class UserSchema(UserLogin):
     id: int = Field(...)
     name: str = Field(
         ...,
@@ -45,3 +45,5 @@ class User(UserLogin):
         description="User's country"
     )
 
+    class Config:
+        orm_mode = True

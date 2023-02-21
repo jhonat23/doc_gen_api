@@ -40,3 +40,6 @@ LocalSession = sessionmaker(
 class Base(DeclarativeBase):
     """This class is the basis to construct the models"""
     pass
+
+# Create tables in database
+## Base.metadata.create_all(bind=engine)
