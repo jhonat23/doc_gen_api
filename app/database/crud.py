@@ -12,8 +12,9 @@ def get_user_by_id(
         db: Session,
         user_id: int
 ):
-    return db.execute(statement=select(User).where(User.id == user_id))
+    #return db.execute(statement=select(User).where(User.id == user_id))
     #return select(User).where(User.id == user_id)
+    return db.query(User).filter(User.id == user_id).first()
 
 def get_user_by_email(
         db: Session,

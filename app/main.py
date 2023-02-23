@@ -1,17 +1,25 @@
 # FastAPI 
-from fastapi import FastAPI
+from fastapi import FastAPI, Query, Depends
 
 # Models an schemas
-from .schemas import UserSchema
+from .schemas import UserSchema, UserBase
 
 # Database
-from .database.database import Base, engine
+from .database.database import Base, engine, LocalSession
 from .database.crud import get_user_by_id
 
 # SQLAlchemy
 from sqlalchemy.orm import Session
 
 Base.metadata.create_all(bind=engine)
+
+# Working with different sessions per SQL request
+def get_db_session():
+    db = LocalSession()
+    try:
+        yield db
+    finally:
+        db.close()
 
 # Create app instance
 app = FastAPI()
@@ -26,9 +34,13 @@ def root():
     return {'Mensaje': '¡Hola!'}
 
 @app.get(
-    path="/user/{user_id}"
+    path="/user/{user_id}",
+    response_model=UserSchema
 )
-def get_user(user_id: int):
-    result = get_user_by_id(Session, user_id)
+def get_user(
+    user_id: int = Query(...),
+    db: Session = Depends(get_db_session)
+):
+    result = get_user_by_id(db, user_id)
     print(result)
-    return '1'
+    return result

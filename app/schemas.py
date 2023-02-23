@@ -9,7 +9,7 @@ class UserBase(BaseModel):
 class UserLogin(UserBase):
     password: str = Field(
         ...,
-        min_length=8,
+        min_length=3,
         description="User's hashed password"
     )
 
@@ -34,8 +34,6 @@ class UserSchema(UserLogin):
     )
     phone: int = Field(
         ...,
-        gt=6,
-        lt=7,
         description="User's phone"
     )
     country: str = Field(
