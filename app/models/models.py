@@ -1,5 +1,6 @@
 from app.database.database import Base
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, LargeBinary, ForeignKey
+from sqlalchemy.orm import relationship
 
 # Creating the user model
 class User(Base):
@@ -28,13 +29,54 @@ class User(Base):
         Integer, 
         unique=True
     )
-    country: str = Column(String(20))
     password: str = Column(String(8))
 
+    ## Foregin data
+    country_id: int = Column(Integer, ForeignKey('country.id'))
+    docs = relationship('UserDocs', backref='users')
+
 # Creating the docs model
-# class Docs(Base):
-#     __tablename__ = 'docs'
+class UserDocs(Base):
+    __tablename__ = 'userdocs'
+
+    ## Atributtes
+    id: int = Column(
+        Integer, 
+        primary_key=True, 
+        index=True, 
+        autoincrement=True, 
+        nullable=False
+    )
+    file: bytes = LargeBinary(LargeBinary)
+
+    ## Foregin data
+    user_id: int = Column(Integer, ForeignKey('users.id'))
+    doctype_id: int = Column(Integer, ForeignKey('doctype.id'))
 
 # # Creating the user's docs model
-# class UserDocs(Base):
-#     __tablename__ = 'Userdocs'
+class DocType(Base):
+    __tablename__ = 'doctype'
+
+    ## Atributtes
+    id: int = Column(
+        Integer, 
+        primary_key=True, 
+        index=True, 
+        autoincrement=True, 
+        nullable=False
+    )
+    name: str = Column(String(50))
+
+# Creating the country model
+class Country(Base):
+    __tablename__ = 'country'
+
+    ## Atributtes
+    id: int = Column(
+        Integer, 
+        primary_key=True, 
+        index=True, 
+        autoincrement=True, 
+        nullable=False
+    )
+    name: str = Column(String(50))
