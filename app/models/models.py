@@ -1,5 +1,5 @@
 from app.database.database import Base
-from sqlalchemy import Column, Integer, String, LargeBinary, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Text
 from sqlalchemy.orm import relationship
 
 # Creating the user model
@@ -47,7 +47,7 @@ class UserDocs(Base):
         autoincrement=True, 
         nullable=False
     )
-    file: bytes = LargeBinary(LargeBinary)
+    file: bytes = Column(Text)
 
     ## Foregin data
     user_id: int = Column(Integer, ForeignKey('users.id'))
