@@ -32,8 +32,9 @@ class UserSchema(UserLogin):
         ...,
         description="User's email"
     )
-    phone: int = Field(
+    phone: str = Field(
         ...,
+        max_length=20,
         description="User's phone"
     )
     country: str = Field(
@@ -45,3 +46,11 @@ class UserSchema(UserLogin):
 
     class Config:
         orm_mode = True
+
+class Country(BaseModel):
+    id: int = Field(...),
+    name: str = Field(
+        ...,
+        max_length=20,
+        description="Country's original name"
+    )
