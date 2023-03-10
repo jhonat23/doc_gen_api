@@ -25,11 +25,11 @@ class User(Base):
         unique=True, 
         index=True
     )
-    phone: int = Column(
-        Integer, 
+    phone: str = Column(
+        String(30),
         unique=True
     )
-    password: str = Column(String(8))
+    password: str = Column(String(70))
 
     ## Foregin data
     country_id: int = Column(Integer, ForeignKey('country.id'))
